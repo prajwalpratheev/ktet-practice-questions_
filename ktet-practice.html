@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KTET Practice Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF8F2;--ink:#1d2a24;--mut:#5d6b63;--g:#1F4D3A;--gold:#B8892B;--card:#fff;--line:#e3dccb;--ok:#1f7a4d;--bad:#b3392f;--okbg:#e6f3ec;--badbg:#f8e8e6;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14201a;--ink:#efeadb;--mut:#a8b3ab;--g:#7fc4a0;--gold:#d8ad55;--card:#1c2b23;--line:#33463b;--ok:#6fd0a0;--bad:#f08a80;--okbg:#1d3a2b;--badbg:#3d2321;--on:#10201a}}
+:root[data-theme=dark]{--bg:#14201a;--ink:#efeadb;--mut:#a8b3ab;--g:#7fc4a0;--gold:#d8ad55;--card:#1c2b23;--line:#33463b;--ok:#6fd0a0;--bad:#f08a80;--okbg:#1d3a2b;--badbg:#3d2321;--on:#10201a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Literata,Georgia,serif}
+header{border-bottom:6px double var(--gold);padding:22px 20px 14px;text-align:center}
+header h1{margin:0;font-size:1.7rem;color:var(--g);letter-spacing:.01em}
+header p{margin:4px 0 0;color:var(--mut);font-size:.9rem}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+h2{font-size:1.1rem;margin:22px 0 10px;color:var(--g)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--g);color:var(--on);border-color:var(--g)}
+.btn{display:block;width:100%;margin-top:26px;padding:14px;border:0;border-radius:8px;background:var(--g);color:var(--on);font:600 1rem Literata,Georgia,serif;cursor:pointer}
+.btn.alt{background:transparent;color:var(--g);border:1.5px solid var(--g);margin-top:10px}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold)}
+.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.85rem;margin:10px 0 14px}
+.q{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:8px;padding:16px 18px;font-size:1.1rem;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin-top:10px;padding:13px 16px;background:var(--card);border:1.5px solid var(--line);border-radius:8px;color:var(--ink);font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.exp{margin-top:14px;padding:12px 16px;border-radius:8px;background:var(--okbg);font-size:.95rem}
+.big{text-align:center;font-size:3rem;font-weight:700;color:var(--g);margin:10px 0 0}
+.rev{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:10px;font-size:.95rem}
+.rev b{color:var(--ok)}
+.note{color:var(--mut);font-size:.85rem;margin-top:18px}
+</style></head><body>
+<header><h1>KTET Practice Questions</h1><p>Kerala Teacher Eligibility Test &middot; fresh questions every round</p></header>
+<main id="app"></main>
+<script>
+const C=["Child Development & Pedagogy","English","Mathematics","Environmental Studies & Science","Social Science","Kerala GK & Renaissance"];
+// [category, question, options, correct index, explanation]
+const B=[
+[0,"Who is regarded as the father of psychoanalysis?",["Carl Jung","Sigmund Freud","Erik Erikson","Alfred Adler"],1,"Sigmund Freud founded psychoanalysis."],
+[0,"Object permanence develops in which Piagetian stage?",["Sensorimotor","Preoperational","Concrete operational","Formal operational"],0,"It emerges in the sensorimotor stage (birth to about 2 years)."],
+[0,"The concept of Zone of Proximal Development was given by:",["Piaget","Bruner","Vygotsky","Skinner"],2,"Vygotsky: the gap between what a child can do alone and with guidance."],
+[0,"The RTE Act 2009 guarantees free and compulsory education for children aged:",["3–10","5–12","6–14","6–18"],2,"Ages 6 to 14 years."],
+[0,"The theory of Multiple Intelligences was proposed by:",["Howard Gardner","Spearman","Thorndike","Binet"],0,"Howard Gardner, 1983."],
+[0,"Kohlberg's theory explains the development of:",["Language","Moral reasoning","Personality","Memory"],1,"Kohlberg: preconventional, conventional, postconventional morality."],
+[0,"Assessment carried out during the teaching-learning process is called:",["Summative","Formative","Diagnostic only","Terminal"],1,"Formative assessment gives ongoing feedback."],
+[0,"Operant conditioning is associated with:",["Pavlov","Watson","B.F. Skinner","Kohler"],2,"Skinner studied reinforcement and behaviour."],
+[1,"Choose the synonym of 'abundant':",["Scarce","Plentiful","Tiny","Fragile"],1,"Abundant means existing in large quantities."],
+[1,"Choose the antonym of 'ancient':",["Old","Historic","Modern","Antique"],2,"Ancient is the opposite of modern."],
+[1,"Which sentence is correct?",["She has been living here since 2010.","She is living here since 2010.","She lives here from 2010.","She have lived here since 2010."],0,"Present perfect continuous with 'since'."],
+[1,"The plural of 'criterion' is:",["Criterions","Criterias","Criteria","Criterium"],2,"Criterion → criteria (Greek origin)."],
+[1,"Passive voice of 'The teacher praised the student':",["The student praised the teacher.","The student was praised by the teacher.","The student is praised by the teacher.","The student has praised the teacher."],1,"Simple past → was/were + past participle."],
+[1,"The idiom 'a piece of cake' means:",["A dessert","Something very easy","A small gift","A celebration"],1,"It describes a task that is very easy."],
+[1,"Fill in the blank: He is good ___ mathematics.",["in","on","at","with"],2,"'Good at' is the correct collocation."],
+[1,"The word 'quickly' is a/an:",["Adjective","Adverb","Verb","Noun"],1,"It modifies a verb, so it is an adverb."],
+[2,"The LCM of 12 and 18 is:",["6","24","36","72"],2,"12 = 2²×3, 18 = 2×3²; LCM = 2²×3² = 36."],
+[2,"25% of 240 is:",["50","55","60","65"],2,"240 ÷ 4 = 60."],
+[2,"The sum of the interior angles of a triangle is:",["90°","180°","270°","360°"],1,"Always 180°."],
+[2,"Next number: 2, 6, 12, 20, 30, ...",["40","42","44","48"],1,"Differences 4, 6, 8, 10, so the next is +12 = 42."],
+[2,"A car at 60 km/h travels for 2.5 hours. Distance covered?",["120 km","140 km","150 km","160 km"],2,"60 × 2.5 = 150 km."],
+[2,"Perimeter of a square of side 7 cm:",["14 cm","21 cm","28 cm","49 cm"],2,"4 × 7 = 28 cm."],
+[2,"2/3 + 1/6 =",["3/9","5/6","1/2","3/6"],1,"4/6 + 1/6 = 5/6."],
+[2,"Area of a circle of radius 7 cm (π = 22/7):",["44 cm²","154 cm²","308 cm²","49 cm²"],1,"πr² = 22/7 × 49 = 154."],
+[3,"Which gas is taken in by plants for photosynthesis?",["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],2,"Plants use CO₂ and release O₂."],
+[3,"The SI unit of force is:",["Joule","Newton","Pascal","Watt"],1,"Newton (N)."],
+[3,"Which part of a plant mainly absorbs water from soil?",["Leaves","Stem","Roots","Flowers"],2,"Root hairs absorb water and minerals."],
+[3,"The planet closest to the Sun is:",["Venus","Mercury","Mars","Earth"],1,"Mercury."],
+[3,"Which vitamin is produced in skin with sunlight?",["Vitamin A","Vitamin C","Vitamin D","Vitamin K"],2,"Sunlight helps skin synthesise Vitamin D."],
+[3,"The pH of pure water at room temperature is about:",["1","5","7","10"],2,"7 is neutral."],
+[3,"Which organ pumps blood throughout the body?",["Lungs","Heart","Liver","Kidney"],1,"The heart."],
+[3,"Water vapour turning into liquid water is called:",["Evaporation","Condensation","Sublimation","Melting"],1,"Condensation, e.g. dew and clouds."],
+[4,"Who was the first Prime Minister of India?",["Sardar Patel","Jawaharlal Nehru","Lal Bahadur Shastri","Rajendra Prasad"],1,"Nehru, from 1947."],
+[4,"The Quit India Movement began in:",["1930","1939","1942","1947"],2,"August 1942."],
+[4,"The Constitution of India came into effect on:",["15 August 1947","26 November 1949","26 January 1950","2 October 1950"],2,"Adopted in 1949, effective 26 January 1950."],
+[4,"The Battle of Plassey was fought in:",["1757","1764","1857","1699"],0,"1757 between Robert Clive and Siraj-ud-Daulah."],
+[4,"Chairman of the Drafting Committee of the Indian Constitution:",["B.R. Ambedkar","K.M. Munshi","Rajendra Prasad","N. Gopalaswami"],0,"Dr B.R. Ambedkar."],
+[4,"The Tropic of Cancer passes through how many Indian states?",["6","8","10","12"],1,"Eight states, from Gujarat to Mizoram."],
+[4,"Who wrote 'The Discovery of India'?",["Gandhi","Tagore","Nehru","Radhakrishnan"],2,"Jawaharlal Nehru, written in 1944."],
+[4,"Which is the longest river flowing within India?",["Godavari","Ganga","Yamuna","Narmada"],1,"The Ganga is the longest within India."],
+[5,"The longest river in Kerala is:",["Bharathapuzha","Periyar","Pamba","Chaliyar"],1,"Periyar, about 244 km."],
+[5,"Kerala state was formed on:",["1 Nov 1956","15 Aug 1947","26 Jan 1950","1 May 1960"],0,"1 November 1956."],
+[5,"Who was the first Chief Minister of Kerala?",["C. Achutha Menon","E.M.S. Namboodiripad","Pattom Thanu Pillai","R. Sankar"],1,"E.M.S. Namboodiripad, 1957."],
+[5,"The Vaikom Satyagraha took place in:",["1919","1924","1931","1936"],1,"1924, against untouchability near the Vaikom temple."],
+[5,"The first Malayalam newspaper, Rajyasamacharam, was started from:",["Thalassery","Kochi","Kottayam","Thiruvananthapuram"],0,"By Hermann Gundert, 1847."],
+[5,"Athirappilly Falls is on which river?",["Periyar","Chalakudy","Pamba","Kabini"],1,"The Chalakudy River."],
+[5,"Kerala's state animal is:",["Tiger","Indian elephant","Nilgiri tahr","Lion-tailed macaque"],1,"The Indian elephant."],
+[5,"Which district of Kerala has the largest area?",["Palakkad","Wayanad","Idukki","Kollam"],2,"Idukki."]
+];
+const $=id=>document.getElementById(id);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let seen=[];try{seen=JSON.parse(localStorage.getItem('ktet_seen')||'[]')}catch(e){}
+const save=()=>{try{localStorage.setItem('ktet_seen',JSON.stringify(seen))}catch(e){}};
+let cat=-1,n=10,qs=[],i=0,score=0,wrong=[],done=false;
+
+function home(){
+  $('app').innerHTML=`<h2>Subject</h2><div class="chips" id="cats"></div>
+  <h2>Number of questions</h2><div class="chips" id="ns"></div>
+  <button class="btn" onclick="start()">Start practice</button>
+  <p class="note">Each round picks questions you haven't seen yet and shuffles the options. Mathematics also adds auto-generated sums, so those never run out. Other subjects hold 8 questions each for now.</p>`;
+  const chip=(t,on,f)=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.setAttribute('aria-pressed',on);b.onclick=f;return b};
+  const drawC=()=>{$('cats').replaceChildren(chip('All subjects',cat<0,()=>{cat=-1;drawC()}),...C.map((c,k)=>chip(c,cat===k,()=>{cat=k;drawC()})))};
+  const drawN=()=>{$('ns').replaceChildren(...[10,20,30].map(x=>chip(x,n===x,()=>{n=x;drawN()})))};
+  drawC();drawN();
+}
+function gen(){
+  const r=(a,b)=>a+Math.random()*(b-a+1)|0,t=r(0,5);let q,a,e;
+  if(t===0){const x=r(12,89),y=r(12,89);a=x+y;q=`${x} + ${y} = ?`;e=`${x} + ${y} = ${a}.`}
+  else if(t===1){const p=[10,20,25,40,50,75][r(0,5)],N=r(3,40)*20;a=p*N/100;q=`${p}% of ${N} is:`;e=`${p}/100 × ${N} = ${a}.`}
+  else if(t===2){const x=r(12,19),y=r(6,9);a=x*y;q=`${x} × ${y} = ?`;e=`${x} × ${y} = ${a}.`}
+  else if(t===3){const s=r(4,12)*10,h=r(2,9);a=s*h;q=`A bus runs at ${s} km/h for ${h} hours. Distance covered (km)?`;e=`Distance = speed × time = ${s} × ${h} = ${a} km.`}
+  else if(t===4){const s=r(3,25);a=s*s;q=`Area of a square of side ${s} cm (cm²):`;e=`Side² = ${s} × ${s} = ${a} cm².`}
+  else{const P=r(1,10)*1000,R=r(2,10),T=r(1,5);a=P*R*T/100;q=`Simple interest on ₹${P} at ${R}% per year for ${T} years (₹):`;e=`SI = PRT/100 = ${a}.`}
+  const s=new Set([a]);while(s.size<4){const k=a+r(1,9)*(Math.random()<.5?-1:1);if(k>0)s.add(k)}
+  return[2,q,[...s],0,e]
+}
+function start(){
+  const pool=B.map((_,k)=>k).filter(k=>cat<0||B[k][0]===cat);
+  let pick=sh(pool.filter(k=>!seen.includes(k))).slice(0,n);
+  let g=[];
+  if(pick.length<n&&(cat<0||cat===2))g=Array.from({length:n-pick.length},gen);
+  else if(pick.length<n){seen=seen.filter(k=>!pool.includes(k));pick=pick.concat(sh(pool.filter(k=>!pick.includes(k))).slice(0,n-pick.length))}
+  seen=seen.concat(pick);save();
+  qs=sh(pick.map(k=>B[k]).concat(g)).map(([c,q,o,a,e])=>{const ix=sh(o.map((_,j)=>j));return{c,q,e,o:ix.map(j=>o[j]),a:ix.indexOf(a)}});
+  i=0;score=0;wrong=[];show();
+}
+function show(){
+  const x=qs[i];done=false;
+  $('app').innerHTML=`<div class="bar"><i style="width:${i/qs.length*100}%"></i></div>
+  <div class="meta"><span>Question ${i+1} of ${qs.length}</span><span>${C[x.c]}</span></div>
+  <div class="q">${x.q}</div><div id="opts"></div><div id="fb"></div>`;
+  x.o.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>ans(k);$('opts').appendChild(b)});
+}
+function ans(k){
+  if(done)return;done=true;const x=qs[i];
+  [...document.querySelectorAll('.opt')].forEach((b,j)=>{b.disabled=true;if(j===x.a)b.classList.add('ok');else if(j===k)b.classList.add('bad')});
+  if(k===x.a)score++;else wrong.push({q:x.q,a:x.o[x.a],e:x.e});
+  $('fb').innerHTML=`<div class="exp">${k===x.a?'Correct. ':'Not quite. '}${x.e}</div><button class="btn" onclick="next()">${i+1<qs.length?'Next question':'See result'}</button>`;
+}
+function next(){i++;i<qs.length?show():result()}
+function result(){
+  const p=Math.round(score/qs.length*100);
+  $('app').innerHTML=`<div class="big">${score} / ${qs.length}</div><p style="text-align:center;margin:4px 0 0;color:var(--mut)">${p}% correct</p>
+  ${wrong.length?'<h2>Review your misses</h2>'+wrong.map(w=>`<div class="rev">${w.q}<br><b>Answer: ${w.a}</b><br>${w.e}</div>`).join(''):'<h2>Perfect round.</h2>'}
+  <button class="btn" onclick="start()">New round, new questions</button>
+  <button class="btn alt" onclick="home()">Change subject</button>`;
+}
+home();
+</script></body></html>
